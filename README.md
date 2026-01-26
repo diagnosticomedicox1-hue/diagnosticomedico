@@ -122,6 +122,33 @@ El proyecto está configurado para funcionar automáticamente en StackBlitz:
 
 > **Nota**: Los datos en la base de datos SQLite en StackBlitz son volátiles y se perderán al reiniciar el contenedor.
 
+## 🚀 Despliegue en Vercel (Producción)
+
+### Despliegue Rápido
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/diagnosticomedicox1-hue/diagnosticomedico)
+
+### Pasos Manuales
+
+1. Ve a [vercel.com](https://vercel.com) e inicia sesión
+2. Click en **"Add New..."** → **"Project"**
+3. Importa tu repositorio: `diagnosticomedicox1-hue/diagnosticomedico`
+4. Configura la variable de entorno:
+   - **Name**: `VITE_GEMINI_API_KEY`
+   - **Value**: Tu API key de Google Gemini
+5. Click en **"Deploy"**
+
+### Características en Vercel
+
+- ✅ **Despliegue automático**: Se actualiza con cada push a GitHub
+- ✅ **HTTPS automático**: Certificado SSL incluido
+- ✅ **Serverless Functions**: Backend escalable automáticamente
+- ✅ **CDN Global**: Rendimiento optimizado mundialmente
+- ⚠️ **SQLite efímero**: Para producción, considera migrar a Vercel Postgres o Supabase
+
+📖 **Guía completa**: Ver [DESPLIEGUE_VERCEL.md](./DESPLIEGUE_VERCEL.md) para instrucciones detalladas y solución de problemas.
+
+
 ## 📁 Estructura del Proyecto
 
 ```
