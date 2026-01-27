@@ -1,0 +1,23 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Consulta {
+  id            Int      @id @default(autoincrement())
+  nombre        String
+  edad          Int
+  sexo          String
+  otros_datos   String
+  lat           Float
+  lng           Float
+  resumen       String
+  diagnostico   String
+  clasificacion String
+  fecha         DateTime @default(now())
+}
+

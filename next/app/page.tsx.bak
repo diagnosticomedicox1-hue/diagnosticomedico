@@ -1,0 +1,22 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import App from "../../src/App";
+import { BrowserRouter } from "react-router-dom";
+
+export default function HomePage() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Evitar renderizar BrowserRouter en el servidor
+  if (!isClient) return null;
+
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+}

@@ -31,3 +31,6 @@ backend/database.db
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify folder
+.netlify
