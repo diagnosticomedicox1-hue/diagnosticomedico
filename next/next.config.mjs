@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "standalone",
     reactStrictMode: false,
     serverExternalPackages: ['@libsql/client'],
     webpack: (config, { isServer }) => {
