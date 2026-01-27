@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
-    serverExternalPackages: ['@libsql/client'],
     webpack: (config, { isServer }) => {
         if (!isServer) {
             config.resolve.fallback = {
