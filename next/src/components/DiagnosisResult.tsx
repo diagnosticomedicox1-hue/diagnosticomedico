@@ -210,7 +210,7 @@ export default function DiagnosisResult({
 
     // Clasificar diagnóstico usando Gemini
     const clasificarDiagnostico = async (diagnostico: string) => {
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
       const prompt = `Clasifica el siguiente diagnóstico médico en una de estas categorías: 'respiratorio', 'dengue' u 'otros'. Responde solo la palabra de la categoría.\nDiagnóstico: ${diagnostico}`;
       try {
         const result = await model.generateContent(prompt);

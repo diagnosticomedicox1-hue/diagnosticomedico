@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       ],
     });
 
-    // @ts-expect-error libsql client expone lastInsertRowid
+    // @ts-ignore libsql client expone lastInsertRowid
     const id = result.lastInsertRowid ?? null;
 
     return NextResponse.json({ id }, { status: 201 });

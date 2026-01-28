@@ -230,6 +230,7 @@ function getIcon(registro: Registro) {
 }
 
 function filtrarRegistros(registros: Registro[], filtro: Filtro, busqueda: string) {
+  if (!Array.isArray(registros)) return [];
   if (filtro === 'respiratorio') {
     return registros.filter(r => getTipoDiagnostico(r) === 'respiratorio');
   }
@@ -240,7 +241,7 @@ function filtrarRegistros(registros: Registro[], filtro: Filtro, busqueda: strin
     return registros.filter(r => getTipoDiagnostico(r) === 'otros');
   }
   if (filtro === 'busqueda' && busqueda.trim()) {
-    return registros.filter(r => r.diagnostico.toLowerCase().includes(busqueda.toLowerCase()));
+    return registros.filter(r => r.diagnostico && r.diagnostico.toLowerCase().includes(busqueda.toLowerCase()));
   }
   return registros;
 }
@@ -255,13 +256,35 @@ const Consulta: React.FC = () => {
 
   useEffect(() => {
     fetch('/api/consultas')
-      .then(res => res.json())
-      .then(data => setRegistros(data));
+      .then(async res => {
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `Error del servidor: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          setRegistros(data);
+        } else if (data && typeof data === 'object' && Array.isArray((data as any).rows)) {
+          // Si por alguna razón recibimos el objeto ResultSet completo
+          setRegistros((data as any).rows);
+        } else {
+          console.error("Datos recibidos no son un array:", data);
+          setRegistros([]);
+        }
+      })
+      .catch(err => {
+        console.error("Error al cargar consultas:", err);
+        setRegistros([]);
+      });
   }, []);
 
   const registrosFiltrados = filtrarRegistros(registros, filtro, busqueda);
-  const totalPaginas = Math.ceil(registrosFiltrados.length / PAGE_SIZE);
-  const registrosPagina = registrosFiltrados.slice((pagina - 1) * PAGE_SIZE, pagina * PAGE_SIZE);
+  const totalPaginas = Math.ceil((registrosFiltrados?.length || 0) / PAGE_SIZE);
+  const registrosPagina = Array.isArray(registrosFiltrados)
+    ? registrosFiltrados.slice((pagina - 1) * PAGE_SIZE, pagina * PAGE_SIZE)
+    : [];
 
   // Centro del mapa: Colima, Colima, México
   const centro: [number, number] = [19.2433, -103.725];
